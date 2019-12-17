@@ -27,8 +27,10 @@ router.get('/ranks', async (req, res) => {
 });
 
 router.post('/ranks', async (req, res) => {
-  const { score, archivementNames, archivementDescriptions } = req.body;
+  let { score, archivementNames, archivementDescriptions } = req.body;
   const archivements = [];
+  if (typeof archivementNames === 'string') archivementNames = [archivementNames];
+  if (typeof archivementDescriptions === 'string') archivementDescriptions = [archivementDescriptions];
   for (let i = 0; i < archivementNames.length; i += 1) {
     archivements.push({ name: archivementNames[i], description: archivementDescriptions[i] });
   }
