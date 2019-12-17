@@ -27,9 +27,13 @@ router.get('/ranks', async (req, res) => {
 });
 
 router.post('/ranks', async (req, res) => {
-  const { score } = req.body;
+  const { score, archivementNames, archivementDescriptions } = req.body;
+  const archivements = [];
+  for (let i = 0; i < archivementNames.length; i += 1) {
+    archivements.push({ name: archivementNames[i], description: archivementDescriptions[i] });
+  }
   if (!score) return res.status(400).json({ message: '점수 데이터가 필요합니다.' });
-  const rank = await new Rank({ score }).save();
+  const rank = await new Rank({ score, archivements }).save();
   return res.status(200).json(rank);
 });
 
